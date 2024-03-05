@@ -4,5 +4,6 @@ CREATE TABLE IF NOT EXISTS users_symbols
     user_id int,
     symbol  varchar(3) not null,
     primary key (id),
-    foreign key (user_id) references users (id)
+    foreign key (user_id) references users (id),
+    constraint unique_user_id_symbol unique (user_id, symbol)
 );

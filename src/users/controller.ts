@@ -1,9 +1,21 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { saveUserSymbol } from '../user_symbols/mysql';
+import { UserSymbol } from '../user_symbols/dto';
 
 export function dashboard(_: Request, res: Response): void {
     res.render('users/dashboard');
 }
 
-export function addSymbol(req: Request, res: Response) {
-    res.send(req.body.symbol);
+export async function addSymbol(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+        const userSymbol: UserSymbol = {
+            symbol: req.body.symbol,
+            userId: 1
+        };
+
+        const symbolId = saveUserSymbol(userSymbol);
+        res.send(symbolId);
+    } catch (e) {
+        next(e);
+    }
 }
