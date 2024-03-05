@@ -1,0 +1,12 @@
+{
+    "app": {
+        "port": "8080"
+    },
+    "mysql": {
+        "host": "localhost",
+        "user": "admin",
+        "password": "admin",
+        "database": "cryptoapp",
+        "port": 3307
+    }
+}
