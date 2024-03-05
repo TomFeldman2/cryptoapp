@@ -2,8 +2,9 @@
   "name": "cryptoapp",
   "version": "1.0.0",
   "description": "A server that teacks crypto currency changes",
-  "main": "index.js",
+  "main": "src/app.ts",
   "scripts": {
+    "startDev": "ts-node src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,9 +13,11 @@
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/express": "^4.17.21",
-    "prettier": "3.2.5"
+    "prettier": "3.2.5",
+    "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "axios": "^1.6.7"
+    "axios": "^1.6.7",
+    "express": "^4.18.3"
   }
 }
