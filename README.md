@@ -1,2 +1,3 @@
 # cryptoapp
-A server that teacks crypto currency changes
+
+A server that tracks cryptocurrency changes
