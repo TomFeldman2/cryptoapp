@@ -1,17 +1,19 @@
 import { UserSymbol } from './dto';
-import { query } from '../db/mysql';
+import { pool } from '../db/mysql';
 import { OkPacketParams } from 'mysql2';
 
 export async function saveUserSymbol(userSymbol: UserSymbol): Promise<number> {
     const { userId, symbol } = userSymbol;
-    const result = (await query({
-        sql: `
+
+    // @ts-expect-error since mysql2 has no types
+    const result: OkPacketParams[] = (await pool.query(
+        `
             INSERT INTO users_symbols
                 (user_id, symbol)
             values (?, ?)
         `,
-        values: [userId, symbol]
-    })) as OkPacketParams;
+        [userId, symbol]
+    )) as OkPacketParams;
 
-    return result.insertId as number;
+    return result[0].insertId as number;
 }
