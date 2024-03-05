@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  db:
+  mysql:
     image: mysql:8.3.0
     restart: always
     environment:
@@ -14,5 +14,14 @@ services:
       - '3306'
     volumes:
       - my-db:/var/lib/mysql
+
+  mongo:
+    image: mongo:7.0.6
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-db:/data/db
+
 volumes:
   my-db:
+  mongo-db:
