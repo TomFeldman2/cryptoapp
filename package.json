@@ -4,7 +4,7 @@
     "description": "A server that tracks crypto currency changes",
     "main": "src/app.ts",
     "scripts": {
-        "startDev": "ts-node src/app.ts",
+        "startDev": "ts-node-dev --respawn --transpile-only src/app.ts",
         "lint": "eslint . --ext .ts",
         "lint-and-fix": "eslint . --ext .ts --fix",
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,7 +22,7 @@
         "@typescript-eslint/parser": "^7.1.1",
         "eslint": "^8.57.0",
         "prettier": "3.2.5",
-        "ts-node": "^10.9.2"
+        "ts-node-dev": "^2.0.0"
     },
     "dependencies": {
         "axios": "^1.6.7",
