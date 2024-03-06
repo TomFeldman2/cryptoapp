@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { saveUserSymbol } from '../user_symbols/mysql';
+import { saveUserSymbol } from '../user_symbols/crud';
 import { UserSymbol } from '../user_symbols/dto';
 
 interface TypedRequestBody<T> extends Express.Request {

@@ -8,5 +8,13 @@
         "password": "admin",
         "database": "cryptoapp",
         "port": 3307
+    },
+    "mongo": {
+        "host": "localhost",
+        "port": 27017,
+        "database": "cryptoapp"
+    },
+    "worker": {
+        "intervalDelay": 30000
     }
 }
