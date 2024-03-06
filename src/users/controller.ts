@@ -1,13 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
-import { saveUserSymbol } from '../user_symbols/crud';
+import { getUserSymbols, saveUserSymbol } from '../user_symbols/crud';
 import { UserSymbol } from '../user_symbols/dto';
+import { getLatestSymbolValue } from '../symbol-value/crud';
 
 interface TypedRequestBody<T> extends Express.Request {
     body: T;
 }
 
-export function dashboard(_: Request, res: Response): void {
-    res.render('users/dashboard');
+export async function dashboard(_: Request, res: Response): Promise<void> {
+    const userSymbols = await getUserSymbols(1);
+    const symbolValues = await Promise.all(userSymbols.map((symbol) => getLatestSymbolValue(symbol.symbol)));
+    res.render('users/dashboard', {
+        symbolValues
+    });
 }
 
 export async function addSymbol(
@@ -23,8 +28,8 @@ export async function addSymbol(
             userId: 1
         };
 
-        const symbolId = await saveUserSymbol(userSymbol);
-        res.json({ id: symbolId });
+        await saveUserSymbol(userSymbol);
+        res.redirect('/users/dashboard');
     } catch (e) {
         next(e);
     }

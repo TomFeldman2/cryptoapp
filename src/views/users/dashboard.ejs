@@ -14,5 +14,21 @@
     </label>
     <button>Add</button>
 </form>
+<table>
+    <thead>
+    <tr>
+        <th>Symbol</th>
+        <th>Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% symbolValues.forEach(userSymbol => { %>
+        <tr>
+            <td><%= userSymbol.symbol %></td>
+            <td><%= userSymbol.value %></td>
+        </tr>
+    <% }) %>
+    </tbody>
+</table>
 </body>
 </html>

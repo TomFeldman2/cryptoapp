@@ -17,6 +17,17 @@ export async function saveUserSymbol(userSymbol: UserSymbol): Promise<number> {
     return result.insertId as number;
 }
 
+export async function getUserSymbols(userId: number): Promise<UserSymbol[]> {
+    return (await query({
+        sql: `
+            SELECT *
+            FROM users_symbols
+            WHERE user_id = ?
+        `,
+        values: [userId]
+    })) as UserSymbol[];
+}
+
 export async function getUniqueSymbols(): Promise<string[]> {
     const result = (await query({
         sql: `

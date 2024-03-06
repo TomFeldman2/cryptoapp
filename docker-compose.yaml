@@ -17,6 +17,8 @@ services:
 
   mongo:
     image: mongo:7.0.6
+    environment:
+      MONGO_INITDB_DATABASE: 'cryptoapp'
     ports:
       - '27017:27017'
     volumes:
