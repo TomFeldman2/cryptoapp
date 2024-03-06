@@ -5,6 +5,16 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"
+            integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4"
+            crossorigin="anonymous"></script>
+    <script>
+        const socket = io('ws://<%= io.host %>:<%= io.port %>');
+        socket.on('update your list', ({ symbol, value }) => {
+            console.log(`received an update your list message: ${symbol}=${value}`);
+            document.getElementById(`${symbol}-value`).innerHTML = value;
+        });
+    </script>
     <title>Document</title>
 </head>
 <body>
@@ -25,7 +35,7 @@
     <% symbolValues.forEach(userSymbol => { %>
         <tr>
             <td><%= userSymbol.symbol %></td>
-            <td><%= userSymbol.value %></td>
+            <td id="<%= userSymbol.symbol %>-value"><%= userSymbol.value %></td>
         </tr>
     <% }) %>
     </tbody>

@@ -3,6 +3,9 @@ import cheerio from 'cheerio';
 import config from 'config';
 import { getUniqueSymbols } from './user_symbols/crud';
 import { saveSymbolValue } from './symbol-value/crud';
+import { io } from 'socket.io-client';
+
+const socket = io(`ws://${config.get('worker.io.host')}:${config.get('worker.io.port')}`);
 
 async function scrape(symbol: string): Promise<void> {
     console.log(`scraping ${symbol}`);
@@ -17,6 +20,8 @@ async function scrape(symbol: string): Promise<void> {
         value,
         timestamp: new Date()
     });
+
+    socket.emit('update from worker', { symbol, value });
 }
 
 async function work(): Promise<never> {
@@ -24,7 +29,6 @@ async function work(): Promise<never> {
         try {
             const symbols = await getUniqueSymbols();
             await Promise.allSettled(symbols.map(scrape));
-            console.log('************************');
         } finally {
             await sleep(config.get<number>('worker.intervalDelay'));
         }
