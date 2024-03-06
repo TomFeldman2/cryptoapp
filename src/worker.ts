@@ -4,10 +4,10 @@ import config from 'config';
 import { getUniqueSymbols } from './user_symbols/crud';
 import { saveSymbolValue } from './symbol-value/crud';
 
-async function scrape(symbol: string) {
+async function scrape(symbol: string): Promise<void> {
     console.log(`scraping ${symbol}`);
     const response = await axios(`https://www.google.com/finance/quote/${symbol}-USD`);
-    const html = response.data;
+    const html = response.data as string;
     const $ = cheerio.load(html);
     const value = +$('.YMlKec.fxKbKc').text().replace(',', '');
     console.log(`${symbol} = ${value}$`);
@@ -19,8 +19,8 @@ async function scrape(symbol: string) {
     });
 }
 
-async function work() {
-    while (true) {
+async function work(): Promise<never> {
+    for (;;) {
         try {
             const symbols = await getUniqueSymbols();
             await Promise.allSettled(symbols.map(scrape));
@@ -35,4 +35,4 @@ function sleep(time: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-work();
+work().catch(console.log);
