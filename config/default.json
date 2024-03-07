@@ -27,5 +27,10 @@
     },
     "io": {
         "port": 8084
+    },
+    "github": {
+        "clientID": "8fc20a721ebdee5d7d18",
+        "clientSecret": "",
+        "callbackURL": "http://localhost:8080/github/callback"
     }
 }

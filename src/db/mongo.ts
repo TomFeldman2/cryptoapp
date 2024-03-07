@@ -7,7 +7,7 @@ const database = config.get<string>('mongo.database');
 
 mongoose
     .connect(`mongodb://${host}:${port}/${database}`)
-    .then(() => console.log('connected successfully'))
+    .then(() => console.log('connected to mongo successfully'))
     .catch((e) => console.log(`Error while connecting to mongo: ${e}`));
 
 export default mongoose;

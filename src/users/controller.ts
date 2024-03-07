@@ -3,13 +3,11 @@ import { getUserSymbols, saveUserSymbol } from '../user_symbols/crud';
 import { UserSymbol } from '../user_symbols/dto';
 import { getLatestSymbolValue } from '../symbol-value/crud';
 import config from 'config';
+import { assertHasUser } from '../middlewares/enforce-auth';
 
-interface TypedRequestBody<T> extends Express.Request {
-    body: T;
-}
-
-export async function dashboard(_: Request, res: Response): Promise<void> {
-    const userSymbols = await getUserSymbols(1);
+export async function dashboard(req: Request, res: Response): Promise<void> {
+    assertHasUser(req);
+    const userSymbols = await getUserSymbols(req.user.id);
     const symbolValues = await Promise.all(userSymbols.map((symbol) => getLatestSymbolValue(symbol.symbol)));
     res.render('users/dashboard', {
         symbolValues,
@@ -17,17 +15,12 @@ export async function dashboard(_: Request, res: Response): Promise<void> {
     });
 }
 
-export async function addSymbol(
-    req: TypedRequestBody<{
-        symbol: string;
-    }>,
-    res: Response,
-    next: NextFunction
-): Promise<void> {
+export async function addSymbol(req: Request, res: Response, next: NextFunction): Promise<void> {
+    assertHasUser(req);
     try {
         const userSymbol: UserSymbol = {
             symbol: req.body.symbol,
-            userId: 1
+            user_id: req.user.id
         };
 
         await saveUserSymbol(userSymbol);

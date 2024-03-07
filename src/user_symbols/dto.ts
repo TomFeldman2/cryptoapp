@@ -1,4 +1,4 @@
 export type UserSymbol = {
-    userId: number;
+    user_id: number;
     symbol: string;
 };
