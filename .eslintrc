@@ -30,6 +30,12 @@
                     {
                         "ignoreStatic": true
                     }
+                ],
+                "@typescript-eslint/no-namespace": [
+                    "error",
+                    {
+                        "allowDeclarations": true
+                    }
                 ]
             }
         },

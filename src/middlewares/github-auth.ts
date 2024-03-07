@@ -15,7 +15,7 @@ passport.deserializeUser((user: Express.User, done): void => {
 passport.use(
     new Strategy(
         { ...config.get('github') },
-        async (_: string, __: string, profile: { id: number }, done: VerifyCallback) => {
+        async (_: string, __: string, profile: { id: number }, done: VerifyCallback): Promise<void> => {
             try {
                 const githubId = +profile.id;
                 let userId = (await getUserWithGitHubId(githubId))?.github_id;

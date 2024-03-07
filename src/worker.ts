@@ -5,7 +5,7 @@ import { getUniqueSymbols } from './user_symbols/crud';
 import { saveSymbolValue } from './symbol-value/crud';
 import { io } from 'socket.io-client';
 
-const socket = io(`ws://${config.get('worker.io.host')}:${config.get('worker.io.port')}`);
+const socket = io(`ws://${config.get<string>('worker.io.host')}:${config.get<string>('worker.io.port')}`);
 
 async function scrape(symbol: string): Promise<void> {
     console.log(`scraping ${symbol}`);
